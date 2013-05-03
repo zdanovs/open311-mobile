@@ -23,7 +23,6 @@ static NSString * const kSegueToSettings = @"SegueToSettings";
 
 @implementation HomeController {
     UIActivityIndicatorView *busyIcon;
-    BOOL busyIconIsBusy;
 }
 
 - (void)viewDidLoad
@@ -55,7 +54,7 @@ static NSString * const kSegueToSettings = @"SegueToSettings";
     if (currentServer == nil) {
         [self.tabBarController setSelectedIndex:kTab_Servers];
     }
-    else if (!busyIconIsBusy) {
+    else if (![busyIcon isAnimating]) {
         self.navigationItem.title = currentServer[kOpen311_Name];
 
         [self startBusyIcon];
@@ -76,7 +75,6 @@ static NSString * const kSegueToSettings = @"SegueToSettings";
 
 - (void)startBusyIcon
 {
-    busyIconIsBusy = YES;
     busyIcon = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     busyIcon.center = self.view.center;
     [busyIcon setFrame:self.view.frame];
@@ -89,7 +87,6 @@ static NSString * const kSegueToSettings = @"SegueToSettings";
 {
     [busyIcon stopAnimating];
     [busyIcon removeFromSuperview];
-    busyIconIsBusy = NO;
 }
 
 - (void)refreshPersonalInfo
